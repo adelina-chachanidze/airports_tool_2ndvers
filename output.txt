@@ -3,16 +3,16 @@ IATA airports: Modlin Airport, Hawarden Airport, #HKI, Siglufjï¿½ï¿½ï¿½ï¿½rï¿½ï¿
 ICAO airports: Mendi Airport, Zabrat Airport, ##HKII, Hornafjï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½ur Airport
 
 correct, correct, doesnt exist, malformed
-IATA cities: Modlin Airport,#CEG, #HKI,#SIJ
+IATA cities: Modlin Airport, Hawarden Airport, #HKI, Siglufjï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½ur Airport
 ICAO cities: Mendi Airport,##UBTT, ##HKII,##BIHN
 
-INCORRECT: ##WMI, #UBTT, ##AYM,#UBTT, ##CEG, AYMN, ###WMI
+INCORRECT: ##WMI, #UBTT, ##AYM, #UBTT, ##CEG, AYMN, ###WMI
 
 CORRECT AIRPORTS: Your flight form Guemar Airport to Robertson Airport is going to be delayed by 1 hour
 INCORRECT AIRPORTS: Your flight form ##ELU to #FARS is going to be delayed by 1 hour
 
-CORRECT CITIES: There're 3628km betweenAspen-Pitkin Co/Sardy Field and Maun Airport
-INCORRECT CITIES: There're 3628km between##ASE and *#FBMN
+CORRECT CITIES: There're 3628km between Aspen-Pitkin Co/Sardy Field and Maun Airport
+INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN
 
 09 May 2022
 07:18PM (-02:00)

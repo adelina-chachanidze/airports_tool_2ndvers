@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"os"
 	"strings"
@@ -40,9 +41,42 @@ func LoadFileContent(file *os.File, content *[]string) {
 	}
 }
 
+func userErrors() error {
+	content, err := os.ReadFile("output.txt")
+	if err != nil {
+		return fmt.Errorf("failed to read output.txt: %w", err)
+	}
+
+	scanner := bufio.NewScanner(bytes.NewReader(content))
+	lineNumber := 0
+	var errorLines []int
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		lineNumber++
+
+		// Check for '#' or non-ASCII characters
+		if strings.Contains(line, "#") || containsNonASCII(line) {
+			errorLines = append(errorLines, lineNumber)
+		}
+	}
+
+	if len(errorLines) > 0 {
+		numbers := make([]string, len(errorLines))
+		for i, line := range errorLines {
+			numbers[i] = fmt.Sprintf("%d", line)
+		}
+		fmt.Printf("\033[33mPossible errors were detected on line(s) %s in the output file. Please check if formatting is correct in the input file.\033[0m\n",
+			strings.Join(numbers, ","))
+	}
+
+	return nil
+}
+
 // Save the collection into the txt file and convert the values into binary
-func SaveFileContent(path string, content []string) {
+func SaveFileContent(path string, content []string) error {
 	file := InitializeFile(path)
+	defer ShutdownFile(file)
 
 	file.Seek(0, 0)
 	file.Truncate(0)
@@ -54,4 +88,19 @@ func SaveFileContent(path string, content []string) {
 			fmt.Fprintln(file, v)
 		}
 	}
+
+	if err := userErrors(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func containsNonASCII(s string) bool {
+	for _, r := range s {
+		if r > 127 {
+			return true
+		}
+	}
+	return false
 }
