@@ -90,6 +90,7 @@ func SaveFileContent(path string, content []string) error {
 		return err
 	}
 
+	fmt.Println("Output files created successfully!")
 	return nil
 }
 

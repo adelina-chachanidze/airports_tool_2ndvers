@@ -24,11 +24,12 @@ type AirportFields struct { // was LookupFields
 }
 
 const (
-	Yellow = "\033[33m"
+	Yellow  = "\033[33m"
 	DarkRed = "\033[31;2m"
 )
 
 func main() {
+	fmt.Println("Welcome to the Flight Itinerary Program!")
 
 	var flightData FlightData
 	var airportFields AirportFields
