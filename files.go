@@ -8,8 +8,8 @@ import (
 )
 
 // Open the file and give the reference to the file to the main
-func OpenFile(arg string) *os.File {
-	file, err := os.OpenFile(arg, os.O_RDWR|os.O_CREATE, 0644)
+func InitializeFile(path string) *os.File {
+	file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		fmt.Println("Failed to open file ", err)
 	}
@@ -17,37 +17,31 @@ func OpenFile(arg string) *os.File {
 }
 
 // Close the file before exiting the program
-func CloseFile(file *os.File) {
+func ShutdownFile(file *os.File) {
 	file.Close()
 }
 
 // Parse the information from the txt file into a Collection struct.
-func ReadFromFile(file *os.File, data *[]string) {
-
+func LoadFileContent(file *os.File, content *[]string) {
 	scanner := bufio.NewScanner(file)
-
 	for scanner.Scan() {
-		text := scanner.Text()
-
+		line := scanner.Text()
 		r := strings.NewReplacer("\r", "\n", "\v", "\n", "\f", "\n")
-		text = r.Replace(text)
-
-		splits := strings.Split(text, "\n")
-
-		*data = append(*data, splits...)
+		line = r.Replace(line)
+		splits := strings.Split(line, "\n")
+		*content = append(*content, splits...)
 	}
 }
 
 // Save the collection into the txt file and convert the values into binary
-func WriteToFile(fileName string, data []string) {
-
-	file := OpenFile((fileName))
+func SaveFileContent(path string, content []string) {
+	file := InitializeFile(path)
 
 	file.Seek(0, 0)
 	file.Truncate(0)
 
-	for i, v := range data {
-		if i == len(data)-1 {
+	for i, v := range content {
+		if i == len(content)-1 {
 			fmt.Fprintf(file, v)
 		} else {
 			fmt.Fprintln(file, v)

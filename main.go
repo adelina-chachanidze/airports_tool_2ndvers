@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-type Information struct {
-	Input  []string
-	Output []string
-	lookup []string
+type FlightData struct {
+	Input    []string
+	Output   []string
+	Database []string // was lookup
 }
 
-type LookupFields struct {
+type AirportFields struct { // was LookupFields
 	name         int
 	iso_country  int
 	municipality int
@@ -37,8 +37,8 @@ const (
 
 func main() {
 
-	var information Information
-	var lookupFields LookupFields
+	var flightData FlightData
+	var airportFields AirportFields
 
 	helperFlag := flag.Bool("h", false, "Display the usage.")
 	printFlag := flag.Bool("p", false, "Print flight information on screen.")
@@ -74,20 +74,19 @@ func main() {
 	outputPath := os.Args[2]
 	lookupPath := os.Args[3]
 
-	input := OpenFile(inputPath)
-	//output := OpenFile(outputPath)
-	lookup := OpenFile(lookupPath)
+	input := InitializeFile(inputPath)
+	lookup := InitializeFile(lookupPath)
 
-	ReadFromFile(input, &information.Input)
-	ReadFromFile(lookup, &information.lookup)
+	LoadFileContent(input, &flightData.Input)
+	LoadFileContent(lookup, &flightData.Database)
 
-	if !ValidateLookup(information.lookup, &lookupFields) {
+	if !ValidateLookup(flightData.Database, &airportFields) {
 		fmt.Println("Error: Airport Lookup malformed")
 		return
 	}
 
 	// Parse data
-	data, print := ParseInput(&information.Input, &information.lookup, lookupFields)
+	data, print := ProcessFlightData(&flightData.Input, &flightData.Database, airportFields)
 
 	// Print if user has designated a print flag
 	if *printFlag {
@@ -96,7 +95,7 @@ func main() {
 		}
 	}
 
-	WriteToFile(outputPath, data)
+	SaveFileContent(outputPath, data)
 
 }
 
@@ -106,7 +105,7 @@ func getUserInput() string {
 	return strings.TrimSpace(input)
 }
 
-func ValidateLookup(lookup []string, fields *LookupFields) bool {
+func ValidateLookup(lookup []string, fields *AirportFields) bool {
 
 	for i, v := range lookup {
 		splits := strings.Split(v, ",")
@@ -126,7 +125,7 @@ func ValidateLookup(lookup []string, fields *LookupFields) bool {
 	return true
 }
 
-func SetLookupFields(lookup []string, fields *LookupFields) bool {
+func SetLookupFields(lookup []string, fields *AirportFields) bool {
 
 	for i, v := range lookup {
 		switch v {

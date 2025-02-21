@@ -8,21 +8,21 @@ import (
 )
 
 // Save the collection into the txt file and convert the values into binary
-func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string, []string) {
+func ProcessFlightData(entries *[]string, database *[]string, fields AirportFields) ([]string, []string) {
 
-	parsedInput := make([]string, 0)
-	printableInput := make([]string, 0)
+	processed := make([]string, 0)
+	displayable := make([]string, 0)
 
-	for _, v := range *input {
+	for _, v := range *entries {
 
 		splits := strings.Split(v, " ")
 
-		parsedLine := ""
-		printableLine := ""
+		processedLine := ""
+		displayableLine := ""
 		for j, b := range splits {
 			if j != 0 {
-				parsedLine += " "
-				printableLine += " "
+				processedLine += " "
+				displayableLine += " "
 			}
 
 			// City search if there's a * before # or ##
@@ -34,17 +34,17 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 
 				// ICAO Codes are 4 letters long + 3 from prefix. If it's not then it's not a valid ICAO code
 				if len(match) == 7 {
-					value = GetCity(*list, match, fields.icao_code, fields)
+					value = FetchCityName(*database, match, fields.icao_code, fields)
 				} else {
 					value = "false"
 				}
 
 				if value == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, value, -1)
-					printableLine += strings.Replace(b, match, Magenta+value+Reset, -1)
+					processedLine += strings.Replace(b, match, value, -1)
+					displayableLine += strings.Replace(b, match, Magenta+value+Reset, -1)
 				}
 
 			} else if strings.Contains(b, "*#") {
@@ -55,17 +55,17 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 
 				// IATA Codes are 3 letters long + 2 from prefix. If it's not then it's not a valid ICAO code.
 				if len(match) == 5 {
-					value = GetCity(*list, match, fields.iata_code, fields)
+					value = FetchCityName(*database, match, fields.iata_code, fields)
 				} else {
 					value = "false"
 				}
 
 				if value == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, value, -1)
-					printableLine += strings.Replace(b, match, Magenta+value+Reset, -1)
+					processedLine += strings.Replace(b, match, value, -1)
+					displayableLine += strings.Replace(b, match, Magenta+value+Reset, -1)
 				}
 
 			} else if strings.Contains(b, "##") {
@@ -76,17 +76,17 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 
 				// ICAO Codes are 4 letters long + 2 from prefix. If it's not then it's not a valid ICAO code
 				if len(match) == 6 {
-					value = GetAirPort(*list, match, fields.icao_code, fields)
+					value = FetchAirportName(*database, match, fields.icao_code, fields)
 				} else {
 					value = "false"
 				}
 
 				if value == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, value, -1)
-					printableLine += strings.Replace(b, match, Red+value+Reset, -1)
+					processedLine += strings.Replace(b, match, value, -1)
+					displayableLine += strings.Replace(b, match, Red+value+Reset, -1)
 				}
 
 			} else if strings.Contains(b, "#") {
@@ -97,17 +97,17 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 
 				// IATA Codes are 3 letters long + 1 from prefix. If it's not then it's not a valid IATA Code
 				if len(match) == 4 {
-					value = GetAirPort(*list, match, fields.iata_code, fields)
+					value = FetchAirportName(*database, match, fields.iata_code, fields)
 				} else {
 					value = "false"
 				}
 
 				if value == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, value, -1)
-					printableLine += strings.Replace(b, match, Red+value+Reset, -1)
+					processedLine += strings.Replace(b, match, value, -1)
+					displayableLine += strings.Replace(b, match, Red+value+Reset, -1)
 				}
 				//fmt.Println("##: " + value)
 
@@ -116,13 +116,13 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 				pattern := regexp.MustCompile(`T24\((.*?)\)`)
 				match := pattern.FindString(b)
 
-				formattedDate := GetDate(match, "T24")
+				formattedDate := FormatDateTime(match, "T24")
 				if formattedDate == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, formattedDate, -1)
-					printableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
+					processedLine += strings.Replace(b, match, formattedDate, -1)
+					displayableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
 				}
 
 			} else if strings.Contains(b, "T12") {
@@ -130,13 +130,13 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 				pattern := regexp.MustCompile(`T12\((.*?)\)`)
 				match := pattern.FindString(b)
 
-				formattedDate := GetDate(match, "T12")
+				formattedDate := FormatDateTime(match, "T12")
 				if formattedDate == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, formattedDate, -1)
-					printableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
+					processedLine += strings.Replace(b, match, formattedDate, -1)
+					displayableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
 				}
 
 			} else if strings.Contains(b, "D") {
@@ -144,42 +144,42 @@ func ParseInput(input *[]string, list *[]string, fields LookupFields) ([]string,
 				pattern := regexp.MustCompile(`D\((.*?)\)`)
 				match := pattern.FindString(b)
 
-				formattedDate := GetDate(match, "D")
+				formattedDate := FormatDateTime(match, "D")
 				if formattedDate == "false" {
-					parsedLine += b
-					printableLine += b
+					processedLine += b
+					displayableLine += b
 				} else {
-					parsedLine += strings.Replace(b, match, formattedDate, -1)
-					printableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
+					processedLine += strings.Replace(b, match, formattedDate, -1)
+					displayableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
 				}
 
 			} else {
-				parsedLine += b
-				printableLine += b
+				processedLine += b
+				displayableLine += b
 			}
 		}
 
 		// Trim newlines (vertical whitespaces)
-		if len(parsedInput) > 0 {
-			if len(parsedInput[len(parsedInput)-1]) == 0 && len(parsedLine) == 0 {
+		if len(processed) > 0 {
+			if len(processed[len(processed)-1]) == 0 && len(processedLine) == 0 {
 				// Do nothing
 			} else {
-				parsedInput = append(parsedInput, parsedLine)
-				printableInput = append(printableInput, printableLine)
+				processed = append(processed, processedLine)
+				displayable = append(displayable, displayableLine)
 			}
 		} else {
-			parsedInput = append(parsedInput, parsedLine)
-			printableInput = append(printableInput, printableLine)
+			processed = append(processed, processedLine)
+			displayable = append(displayable, displayableLine)
 		}
 
 	}
-	return parsedInput, printableInput
+	return processed, displayable
 }
 
-func GetAirPort(list []string, code string, codeType int, fields LookupFields) string {
+func FetchAirportName(database []string, code string, codeType int, fields AirportFields) string {
 
 	code = strings.Trim(code, "#()*,.")
-	for _, v := range list {
+	for _, v := range database {
 		splits := strings.Split(v, ",")
 
 		if len(splits) >= 6 {
@@ -194,10 +194,10 @@ func GetAirPort(list []string, code string, codeType int, fields LookupFields) s
 	return "false"
 }
 
-func GetCity(list []string, code string, codeType int, fields LookupFields) string {
+func FetchCityName(database []string, code string, codeType int, fields AirportFields) string {
 
 	code = strings.Trim(code, "#()*,.")
-	for _, v := range list {
+	for _, v := range database {
 		splits := strings.Split(v, ",")
 
 		if len(splits) >= 6 {
@@ -212,20 +212,20 @@ func GetCity(list []string, code string, codeType int, fields LookupFields) stri
 	return "false"
 }
 
-func GetDate(date string, identifier string) string {
+func FormatDateTime(timestamp string, format string) string {
 
-	date = strings.Replace(date, "Z", "+00:00", -1)
-	date = strings.Replace(date, "T", "-", -1)
-	date = strings.Replace(date, "+", "-+", -1)
+	timestamp = strings.Replace(timestamp, "Z", "+00:00", -1)
+	timestamp = strings.Replace(timestamp, "T", "-", -1)
+	timestamp = strings.Replace(timestamp, "+", "-+", -1)
 
-	if identifier == "D" {
-		date = strings.Trim(date, "D()")
-		dateSplits := strings.Split(date, "-")
+	if format == "D" {
+		timestamp = strings.Trim(timestamp, "D()")
+		dateSplits := strings.Split(timestamp, "-")
 
 		if len(dateSplits) < 3 {
 			return "false"
 		}
-		month := GetMonth(dateSplits[1])
+		month := ConvertMonthToAbbrev(dateSplits[1])
 		if month == "false" {
 			return month
 		}
@@ -233,9 +233,9 @@ func GetDate(date string, identifier string) string {
 
 		return formattedDate
 
-	} else if identifier == "T12" {
+	} else if format == "T12" {
 		// Split the data into slices
-		dateSplits := strings.Split(date, "-")
+		dateSplits := strings.Split(timestamp, "-")
 
 		// If there are not at least 3 slices then the data is not in the T12(2080-05-04T14:54Z) format
 		if len(dateSplits) < 3 {
@@ -289,8 +289,8 @@ func GetDate(date string, identifier string) string {
 		formattedDate := timeFormatted + timeSuffix + " (" + dateSplits[len(dateSplits)-1]
 		return formattedDate
 
-	} else if identifier == "T24" {
-		dateSplits := strings.Split(date, "-")
+	} else if format == "T24" {
+		dateSplits := strings.Split(timestamp, "-")
 		if len(dateSplits) < 3 {
 			return "false"
 		}
@@ -305,7 +305,7 @@ func GetDate(date string, identifier string) string {
 	}
 }
 
-func GetMonth(month string) string {
+func ConvertMonthToAbbrev(month string) string {
 	switch month {
 	case "01":
 		return "Jan"
