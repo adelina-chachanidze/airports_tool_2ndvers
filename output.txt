@@ -1,0 +1,39 @@
+correct, correct, doesnt exist, malformed
+IATA airports: Modlin Airport,            Hawarden Airport, #HKI, Siglufj����r����ur Airport
+ICAO airports: Mendi Airport, Zabrat Airport, ##HKII, Hornafj����r����ur Airport
+
+            correct, correct, doesnt exist, malformed
+IATA cities: Modlin Airport,Hawarden Airport, #HKI,Siglufj����r����ur Airport
+ICAO cities: Mendi Airport,Zabrat Airport, ##HKII,Hornafj����r����ur Airport
+
+INCORRECT: #Modlin Airport, #UBTT, ##AYM,#UBTT, #Hawarden Airport, AYMN, ##Modlin Airport
+
+CORRECT AIRPORTS: Your flight form Guemar Airport to Robertson Airport is going to be delayed by 1 hour
+INCORRECT AIRPORTS: Your flight form #Guemar Airport to Hector International AirportS is going to be delayed by 1 hour
+
+CORRECT CITIES: There're 3628km betweenAspen-Pitkin Co/Sardy Field and Maun Airport 
+INCORRECT CITIES: There're 3628km between#Aspen-Pitkin Co/Sardy Field and LubumbashiN 
+
+
+
+D(2022-05-09T08:07)
+07:18PM (-02:00)
+02:54PM (+00:00)
+T12(1980-02-17T03:30+11:00)
+03:09AM (+00:00)
+T24(2032-07-17T04:08+13:00)
+17:54 (+00:00)
+15:29 (-11:00)
+21:43 (+00:00)
+
+Run the program, and the output file should be:
+
+09 May 2022
+07:18PM (-02:00)
+02:54PM (+00:00)
+03:30AM (+11:00)
+03:09AM (+00:00)
+04:08 (+13:00)
+17:54 (+00:00)
+15:29 (-11:00)
+21:43 (+00:00)
