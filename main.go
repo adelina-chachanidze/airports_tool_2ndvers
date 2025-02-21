@@ -24,15 +24,8 @@ type AirportFields struct { // was LookupFields
 }
 
 const (
-	ClearScreen = "\033[H\033[2J"
-	Reset       = "\033[0m"
-	Red         = "\033[31m"
-	Green       = "\033[32m"
-	Yellow      = "\033[33m"
-	Blue        = "\033[34m"
-	Magenta     = "\033[35m"
-	Cyan        = "\033[36m"
-	White       = "\033[37m"
+	Yellow = "\033[33m"
+	DarkRed = "\033[31;2m"
 )
 
 func main() {
@@ -53,19 +46,19 @@ func main() {
 		os.Args = append(os.Args[:1], os.Args[2:]...)
 	}
 
-	// Check that the program was initialized with enough arguments. If not, then return with a instruction message
+	// Check that the program was initialized with enough arguments
 	if len(os.Args) < 4 {
-		fmt.Println("Too few arguments. \nUsage: go run . ./input.txt ./output.txt ./airport-lookup.csv")
+		fmt.Println(DarkRed + "Too few arguments. \nUsage: go run . ./input.txt ./output.txt ./airport-lookup.csv")
 		return
 	}
 
 	// Check that input and lookup exists
 	if _, err := os.Stat(os.Args[1]); os.IsNotExist(err) {
-		fmt.Println("Input file not found. ", err)
+		fmt.Println(DarkRed + "Input file not found. " + err.Error())
 		return
 	}
 	if _, err := os.Stat(os.Args[3]); os.IsNotExist(err) {
-		fmt.Println("Lookup file not found. ", err)
+		fmt.Println(DarkRed + "Lookup file not found. " + err.Error())
 		return
 	}
 
@@ -81,7 +74,7 @@ func main() {
 	LoadFileContent(lookup, &flightData.Database)
 
 	if !ValidateLookup(flightData.Database, &airportFields) {
-		fmt.Println("Error: Airport Lookup malformed")
+		fmt.Println(DarkRed + "Error: Airport Lookup malformed")
 		return
 	}
 

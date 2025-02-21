@@ -42,10 +42,7 @@ func LoadFileContent(file *os.File, content *[]string) {
 }
 
 func userErrors() error {
-	content, err := os.ReadFile("output.txt")
-	if err != nil {
-		return fmt.Errorf("failed to read output.txt: %w", err)
-	}
+	content, _ := os.ReadFile("output.txt")
 
 	scanner := bufio.NewScanner(bytes.NewReader(content))
 	lineNumber := 0

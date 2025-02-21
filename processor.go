@@ -44,7 +44,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, value, -1)
-					displayableLine += strings.Replace(b, match, Magenta+value+Reset, -1)
+					displayableLine += strings.Replace(b, match, value, -1)
 				}
 
 			} else if strings.Contains(b, "*#") {
@@ -65,7 +65,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, value, -1)
-					displayableLine += strings.Replace(b, match, Magenta+value+Reset, -1)
+					displayableLine += strings.Replace(b, match, value, -1)
 				}
 
 			} else if strings.Contains(b, "##") {
@@ -86,7 +86,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, value, -1)
-					displayableLine += strings.Replace(b, match, Red+value+Reset, -1)
+					displayableLine += strings.Replace(b, match, value, -1)
 				}
 
 			} else if strings.Contains(b, "#") {
@@ -107,7 +107,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, value, -1)
-					displayableLine += strings.Replace(b, match, Red+value+Reset, -1)
+					displayableLine += strings.Replace(b, match, value, -1)
 				}
 				//fmt.Println("##: " + value)
 
@@ -122,7 +122,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, formattedDate, -1)
-					displayableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
+					displayableLine += strings.Replace(b, match, formattedDate, -1)
 				}
 
 			} else if strings.Contains(b, "T12") {
@@ -136,7 +136,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, formattedDate, -1)
-					displayableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
+					displayableLine += strings.Replace(b, match, formattedDate, -1)
 				}
 
 			} else if strings.Contains(b, "D") {
@@ -150,7 +150,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					displayableLine += b
 				} else {
 					processedLine += strings.Replace(b, match, formattedDate, -1)
-					displayableLine += strings.Replace(b, match, Blue+formattedDate+Reset, -1)
+					displayableLine += strings.Replace(b, match, formattedDate, -1)
 				}
 
 			} else {
