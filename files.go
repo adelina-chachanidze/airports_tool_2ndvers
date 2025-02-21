@@ -26,10 +26,17 @@ func LoadFileContent(file *os.File, content *[]string) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
+		// Replace various line endings with newline
 		r := strings.NewReplacer("\r", "\n", "\v", "\n", "\f", "\n")
 		line = r.Replace(line)
+		// Split by newlines
 		splits := strings.Split(line, "\n")
-		*content = append(*content, splits...)
+		// Process each split to remove extra spaces
+		for _, split := range splits {
+			// Fields splits by whitespace and Join reconstructs with single spaces
+			normalized := strings.Join(strings.Fields(split), " ")
+			*content = append(*content, normalized)
+		}
 	}
 }
 
