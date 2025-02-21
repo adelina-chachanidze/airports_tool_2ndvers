@@ -35,3 +35,42 @@ Run the program, and the output file should be:
 17:54 (+00:00)
 15:29 (-11:00)
 21:43 (+00:00)
+
+Flight Itinerary
+Line 1Line 2
+Line 1Line 2
+Line 1
+Line 2
+Los Angeles International Airport to London on 15 Jul 2023
+Departure: 09:00AM (-07:00)
+Arrival: 12:00 (+00:00)
+Departure: 09:00AM (-07:00)
+Dep2: T12(2007-04-05T12:30−02:00)
+Hel#KUOlo
+
+#HKI Flight
+
+Your flight departs from Hannover Airport and your destination is Bremen Airport
+Your flight departs from ##HAJ, and your destination is #EDDW.
+
+Your flight departs from Hannover Airport, and your destination is Bremen Airport.
+(Southampton Airport) to Hawarden Airport. on 15 Jul 2023
+
+Departure: 09:00AM (-07:00)
+Arrival: 12:00 (+00:00)
+##WWK to #BIHN on 15 Jul 2023
+(*##WWK) to #BIHN... on 15 Jul 2023
+(Wewak) to #BIHN... on 15 Jul 2023
+(*#BIEG) to #BIHN... on 15 Jul 2023
+(Egilssta����ir) to #BIHN... on 15 Jul 2023
+
+##OOOO to #AAA on 15 Aug 2023
+09 May 2022
+07:18PM (-02:00)
+02:54PM (+00:00)
+03:30AM (+11:00)
+03:09AM (+00:00)
+04:08 (+13:30)
+17:54 (+00:00)
+15:29 (-11:00)
+21:43 (+00:00)

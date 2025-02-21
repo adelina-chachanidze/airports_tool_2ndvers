@@ -37,3 +37,47 @@ Run the program, and the output file should be:
 17:54 (+00:00)
 15:29 (-11:00)
 21:43 (+00:00)
+
+Flight Itinerary
+Line 1Line 2
+Line 1Line 2
+Line 1
+Line 2
+#LAX to *##EGLL on D(2023-07-15T09:00-07:00)
+Departure: T12(2023-07-15T09:00-07:00)
+Arrival: T24(2023-07-16T12:00Z)
+Departure: T12(2023-07-15T09:00-07:00)
+Dep2:        T12(2007-04-05T12:30−02:00)
+Hel#KUOlo
+
+
+#HKI Flight
+
+Your flight departs from #HAJ and your destination is ##EDDW
+Your flight departs from ##HAJ, and your destination is #EDDW.
+
+Your flight departs from #HAJ, and your destination is ##EDDW.
+(##EGHI) to          #CEG. on D(2023-07-15T09:00-07:00)
+
+
+Departure: T12(2023-07-15T09:00-07:00)
+Arrival: T24(2023-07-16T12:00Z)
+##WWK to #BIHN on D(2023-07-15T09:00-07:00)
+(*##WWK) to #BIHN... on D(2023-07-15T09:00-07:00)
+(*#WWK) to #BIHN... on D(2023-07-15T09:00-07:00)
+(*#BIEG) to #BIHN... on D(2023-07-15T09:00-07:00)
+(*##BIEG) to #BIHN... on D(2023-07-15T09:00-07:00)
+
+
+
+
+##OOOO to #AAA on D(2023-08-15T09:00-07:00)
+D(2022-05-09T08:07Z)
+T12(2069-04-24T19:18-02:00)
+T12(2080-05-04T14:54Z)
+T12(1980-02-17T03:30+11:00)
+T12(2029-09-04T03:09Z)
+T24(2032-07-17T04:08+13:30)
+T24(2084-04-13T17:54Z)
+T24(2024-07-23T15:29-11:00)
+T24(2042-09-01T21:43Z)

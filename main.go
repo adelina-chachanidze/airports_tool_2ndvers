@@ -35,7 +35,6 @@ func main() {
 	var airportFields AirportFields
 
 	helperFlag := flag.Bool("h", false, "Display the usage.")
-	printFlag := flag.Bool("p", false, "Print flight information on screen.")
 	flag.Parse()
 	// If a helper flag is used return with instructions
 	if *helperFlag {
@@ -80,17 +79,9 @@ func main() {
 	}
 
 	// Parse data
-	data, print := ProcessFlightData(&flightData.Input, &flightData.Database, airportFields)
-
-	// Print if user has designated a print flag
-	if *printFlag {
-		for _, v := range print {
-			fmt.Println(v)
-		}
-	}
+	data, _ := ProcessFlightData(&flightData.Input, &flightData.Database, airportFields)
 
 	SaveFileContent(outputPath, data)
-
 }
 
 func getUserInput() string {
