@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/csv"
 	"flag"
 	"fmt"
 	"os"
@@ -92,9 +93,23 @@ func getUserInput() string {
 
 // ValidateLookup checks if the airport database has valid formatting
 func ValidateLookup(lookup []string, fields *AirportFields) bool {
+	// Ensure there is at least one line for the header
+	if len(lookup) == 0 {
+		return false
+	}
 
-	for i, v := range lookup {
-		splits := strings.Split(v, ",")
+	// Expected number of fields (not commas)
+	expectedFields := 6
+
+	for i, line := range lookup {
+		// Parse the CSV line properly to handle quoted fields
+		r := csv.NewReader(strings.NewReader(line))
+		splits, err := r.Read()
+
+		// Check if parsing failed or field count is wrong
+		if err != nil || len(splits) != expectedFields {
+			return false
+		}
 
 		// Get the order of the fields
 		if i == 0 {
