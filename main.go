@@ -16,7 +16,7 @@ type FlightData struct {
 	Database []string
 }
 
-// AirportFields stores the column indices for different airport data fields
+// defines what data needs to be extracted from the CSV file
 type AirportFields struct {
 	name         int
 	iso_country  int
@@ -34,6 +34,8 @@ const (
 func main() {
 	fmt.Println("Welcome to the Flight Itinerary Program!")
 
+	//creates a new FlightData struct named flightData.
+	//This struct will hold flight-related data, and start as empty slices of strings.
 	var flightData FlightData
 	var airportFields AirportFields
 
@@ -71,7 +73,9 @@ func main() {
 	input := InitializeFile(inputPath)
 	lookup := InitializeFile(lookupPath)
 
+	// Loads the content of the input file into flightData.Input
 	LoadFileContent(input, &flightData.Input)
+	// Loads the content of the lookup file into flightData.Database
 	LoadFileContent(lookup, &flightData.Database)
 
 	if !ValidateLookup(flightData.Database, &airportFields) {
@@ -126,7 +130,7 @@ func ValidateLookup(lookup []string, fields *AirportFields) bool {
 	return true
 }
 
-// SetLookupFields maps database column headers to their respective field indices
+// sets up the struct based on the actual data layout in the CSV file
 func SetLookupFields(lookup []string, fields *AirportFields) bool {
 
 	for i, v := range lookup {

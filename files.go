@@ -72,20 +72,27 @@ func userErrors() error {
 
 // Save the collection into the txt file and convert the values into binary
 func SaveFileContent(path string, content []string) error {
+	// Open the file for reading and writing, creating it if it doesn't exist
 	file := InitializeFile(path)
+	// Ensure the file is closed when the function exits
 	defer ShutdownFile(file)
 
+	// Move the file pointer to the beginning and clear the file's contents
 	file.Seek(0, 0)
 	file.Truncate(0)
 
+	// Write each string in the content slice to the file
 	for i, v := range content {
 		if i == len(content)-1 {
+			// Write the last element without a newline
 			fmt.Fprintf(file, v)
 		} else {
+			// Write each element followed by a newline
 			fmt.Fprintln(file, v)
 		}
 	}
 
+	// Check for potential errors in the file content
 	if err := userErrors(); err != nil {
 		return err
 	}

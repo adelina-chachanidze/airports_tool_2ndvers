@@ -7,7 +7,6 @@ import (
 	"strings"
 )
 
-// Save the collection into the txt file and convert the values into binary
 func ProcessFlightData(entries *[]string, database *[]string, fields AirportFields) ([]string, []string) {
 
 	// Initialize slices to store processed and displayable lines
@@ -30,6 +29,9 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 			// Process date formats first, then time formats, then airport codes
 			// First handle dates (D format) - regardless of whether they contain time components
 			if strings.Contains(b, "D(") {
+				// .: This matches any character except newline characters.
+				// *: This quantifier matches zero or more occurrences of the preceding element (in this case, any character).
+				// ?: This makes the preceding * non-greedy (or lazy), meaning it will match as few characters as possible while still allowing the overall regex to match.
 				pattern := regexp.MustCompile(`D\((.*?)\)`)
 				match := pattern.FindString(b)
 
