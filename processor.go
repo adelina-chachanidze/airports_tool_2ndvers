@@ -27,9 +27,46 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 				displayableLine += " "
 			}
 
-			// City search if there's a * before # or ##
-			if strings.Contains(b, "*##") {
+			// Process date formats first, then time formats, then airport codes
+			// First handle dates (D format) - regardless of whether they contain time components
+			if strings.Contains(b, "D(") {
+				pattern := regexp.MustCompile(`D\((.*?)\)`)
+				match := pattern.FindString(b)
 
+				formattedDate := FormatDateTime(match, "D")
+				if formattedDate == "false" {
+					processedLine += b
+					displayableLine += b
+				} else {
+					processedLine += strings.Replace(b, match, formattedDate, -1)
+					displayableLine += strings.Replace(b, match, formattedDate, -1)
+				}
+			} else if strings.Contains(b, "T24") {
+				pattern := regexp.MustCompile(`T24\((.*?)\)`)
+				match := pattern.FindString(b)
+
+				formattedDate := FormatDateTime(match, "T24")
+				if formattedDate == "false" {
+					processedLine += b
+					displayableLine += b
+				} else {
+					processedLine += strings.Replace(b, match, formattedDate, -1)
+					displayableLine += strings.Replace(b, match, formattedDate, -1)
+				}
+			} else if strings.Contains(b, "T12") {
+				pattern := regexp.MustCompile(`T12\((.*?)\)`)
+				match := pattern.FindString(b)
+
+				formattedDate := FormatDateTime(match, "T12")
+				if formattedDate == "false" {
+					processedLine += b
+					displayableLine += b
+				} else {
+					processedLine += strings.Replace(b, match, formattedDate, -1)
+					displayableLine += strings.Replace(b, match, formattedDate, -1)
+				}
+			} else if strings.Contains(b, "*##") {
+				// City search ICAO
 				pattern := regexp.MustCompile(`\*##[A-Z]{4}\b`)
 				match := pattern.FindString(b)
 				value := ""
@@ -50,8 +87,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 				}
 
 			} else if strings.Contains(b, "*#") {
-
-				// Extract the IATA code from the line
+				// City search IATA
 				pattern := regexp.MustCompile(`\*#[A-Z]{3}\b`)
 				match := pattern.FindString(b)
 				value := ""
@@ -72,7 +108,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 				}
 
 			} else if strings.Contains(b, "##") {
-
+				// Airport search ICAO
 				pattern := regexp.MustCompile(`\##[A-Z]{4}\b`)
 				match := pattern.FindString(b)
 				value := ""
@@ -93,7 +129,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 				}
 
 			} else if strings.Contains(b, "#") {
-
+				// Airport search IATA
 				pattern := regexp.MustCompile(`\#[A-Z]{3}\b`)
 				match := pattern.FindString(b)
 				value := ""
@@ -112,50 +148,6 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 					processedLine += strings.Replace(b, match, value, -1)
 					displayableLine += strings.Replace(b, match, value, -1)
 				}
-				//fmt.Println("##: " + value)
-
-			} else if strings.Contains(b, "T24") {
-
-				pattern := regexp.MustCompile(`T24\((.*?)\)`)
-				match := pattern.FindString(b)
-
-				formattedDate := FormatDateTime(match, "T24")
-				if formattedDate == "false" {
-					processedLine += b
-					displayableLine += b
-				} else {
-					processedLine += strings.Replace(b, match, formattedDate, -1)
-					displayableLine += strings.Replace(b, match, formattedDate, -1)
-				}
-
-			} else if strings.Contains(b, "T12") {
-
-				pattern := regexp.MustCompile(`T12\((.*?)\)`)
-				match := pattern.FindString(b)
-
-				formattedDate := FormatDateTime(match, "T12")
-				if formattedDate == "false" {
-					processedLine += b
-					displayableLine += b
-				} else {
-					processedLine += strings.Replace(b, match, formattedDate, -1)
-					displayableLine += strings.Replace(b, match, formattedDate, -1)
-				}
-
-			} else if strings.Contains(b, "D") {
-
-				pattern := regexp.MustCompile(`D\((.*?)\)`)
-				match := pattern.FindString(b)
-
-				formattedDate := FormatDateTime(match, "D")
-				if formattedDate == "false" {
-					processedLine += b
-					displayableLine += b
-				} else {
-					processedLine += strings.Replace(b, match, formattedDate, -1)
-					displayableLine += strings.Replace(b, match, formattedDate, -1)
-				}
-
 			} else {
 				processedLine += b
 				displayableLine += b
@@ -220,12 +212,20 @@ func FetchCityName(database []string, code string, codeType int, fields AirportF
 // FormatDateTime converts timestamps between different time and date formats
 func FormatDateTime(timestamp string, format string) string {
 	timestamp = strings.Replace(timestamp, "Z", "+00:00", -1)
-	timestamp = strings.Replace(timestamp, "T", "-", -1)
 	timestamp = strings.Replace(timestamp, "+", "-+", -1)
 
 	if format == "D" {
+		// Remove the D() wrapper
 		timestamp = strings.Trim(timestamp, "D()")
-		dateSplits := strings.Split(timestamp, "-")
+
+		// Extract just the date part, handling any time components
+		datePart := timestamp
+		if strings.Contains(timestamp, "T") {
+			datePart = strings.Split(timestamp, "T")[0]
+		}
+
+		// Process the date part
+		dateSplits := strings.Split(datePart, "-")
 
 		if len(dateSplits) < 3 {
 			return "false"
@@ -249,20 +249,26 @@ func FormatDateTime(timestamp string, format string) string {
 
 		month := ConvertMonthToAbbrev(monthStr)
 		if month == "false" {
-			return month
+			return "false"
 		}
-		formattedDate := dateSplits[2] + " " + month + " " + dateSplits[0]
 
+		formattedDate := dateSplits[2] + " " + month + " " + dateSplits[0]
 		return formattedDate
 
 	} else if format == "T12" {
-		// Split the data into slices
+		// Remove the T12() wrapper
+		timestamp = strings.Trim(timestamp, "T12()")
+
+		// Apply T replacement for processing
+		timestamp = strings.Replace(timestamp, "T", "-", -1)
+
 		dateSplits := strings.Split(timestamp, "-")
 
-		// If there are not at least 3 slices then the data is not in the T12(2080-05-04T14:54Z) format
+		// If there are not at least 3 slices then the data is not in the expected format
 		if len(dateSplits) < 3 {
 			return "false"
 		}
+
 		temporatyData := strings.Trim(dateSplits[len(dateSplits)-2], "+:()")
 
 		// Validate time format
@@ -285,8 +291,8 @@ func FormatDateTime(timestamp string, format string) string {
 		if len(temporatyDataReplaced) != 4 {
 			return "false"
 		}
-		parsedInt, err := strconv.Atoi(temporatyDataReplaced)
 
+		parsedInt, err := strconv.Atoi(temporatyDataReplaced)
 		if err != nil {
 			return "false"
 		}
@@ -319,13 +325,21 @@ func FormatDateTime(timestamp string, format string) string {
 			}
 			timeFormatted += string(parsedTime[i])
 		}
+
 		if !strings.Contains(dateSplits[len(dateSplits)-1], "+") {
 			dateSplits[len(dateSplits)-1] = "-" + dateSplits[len(dateSplits)-1]
 		}
+
 		formattedDate := timeFormatted + timeSuffix + " (" + dateSplits[len(dateSplits)-1]
 		return formattedDate
 
 	} else if format == "T24" {
+		// Remove the T24() wrapper
+		timestamp = strings.Trim(timestamp, "T24()")
+
+		// Apply T replacement for processing
+		timestamp = strings.Replace(timestamp, "T", "-", -1)
+
 		dateSplits := strings.Split(timestamp, "-")
 		if len(dateSplits) < 3 {
 			return "false"
@@ -349,9 +363,9 @@ func FormatDateTime(timestamp string, format string) string {
 		if !strings.Contains(dateSplits[len(dateSplits)-1], "+") {
 			dateSplits[len(dateSplits)-1] = "-" + dateSplits[len(dateSplits)-1]
 		}
+
 		formattedDate := dateSplits[len(dateSplits)-2] + " (" + dateSplits[len(dateSplits)-1]
 		return formattedDate
-
 	} else {
 		return "false"
 	}
