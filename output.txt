@@ -14,8 +14,8 @@ INCORRECT AIRPORTS: Your flight form ##ELU to #FARS is going to be delayed by 1 
 CORRECT CITIES: There're 3628km between Aspen-Pitkin Co/Sardy Field and Maun Airport
 INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN
 
-09 May 2022
-07:18PM (-02:00)
+D(2025-02-29T08:07)
+T12(2069-04-24T33:18-02:00)
 02:54PM (+00:00)
 03:30AM (+11:00)
 03:09AM (+00:00)
@@ -65,7 +65,7 @@ Arrival: 12:00 (+00:00)
 (Egilssta����ir) to #BIHN... on 15 Jul 2023
 
 ##OOOO to #AAA on 15 Aug 2023
-09 May 2022
+D(2022-99-99T08:07Z)
 07:18PM (-02:00)
 02:54PM (+00:00)
 03:30AM (+11:00)

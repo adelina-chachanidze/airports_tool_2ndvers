@@ -219,7 +219,6 @@ func FetchCityName(database []string, code string, codeType int, fields AirportF
 
 // FormatDateTime converts timestamps between different time and date formats
 func FormatDateTime(timestamp string, format string) string {
-
 	timestamp = strings.Replace(timestamp, "Z", "+00:00", -1)
 	timestamp = strings.Replace(timestamp, "T", "-", -1)
 	timestamp = strings.Replace(timestamp, "+", "-+", -1)
@@ -231,7 +230,24 @@ func FormatDateTime(timestamp string, format string) string {
 		if len(dateSplits) < 3 {
 			return "false"
 		}
-		month := ConvertMonthToAbbrev(dateSplits[1])
+
+		// Parse year and day as integers for validation
+		year, errYear := strconv.Atoi(dateSplits[0])
+		day, errDay := strconv.Atoi(dateSplits[2])
+		monthStr := dateSplits[1]
+		monthInt, errMonth := strconv.Atoi(monthStr)
+
+		// Check for parsing errors
+		if errYear != nil || errDay != nil || errMonth != nil {
+			return "false"
+		}
+
+		// Validate date
+		if !isValidDate(year, monthInt, day) {
+			return "false"
+		}
+
+		month := ConvertMonthToAbbrev(monthStr)
 		if month == "false" {
 			return month
 		}
@@ -248,6 +264,20 @@ func FormatDateTime(timestamp string, format string) string {
 			return "false"
 		}
 		temporatyData := strings.Trim(dateSplits[len(dateSplits)-2], "+:()")
+
+		// Validate time format
+		timeParts := strings.Split(temporatyData, ":")
+		if len(timeParts) != 2 {
+			return "false"
+		}
+
+		// Check if hours and minutes are valid
+		hours, errHours := strconv.Atoi(timeParts[0])
+		minutes, errMinutes := strconv.Atoi(timeParts[1])
+
+		if errHours != nil || errMinutes != nil || hours < 0 || hours > 23 || minutes < 0 || minutes > 59 {
+			return "false"
+		}
 
 		// Remove the :-character from between the numbers and parse it into an integer for easier handling
 		temporatyDataReplaced := strings.Replace(temporatyData, ":", "", -1)
@@ -300,6 +330,22 @@ func FormatDateTime(timestamp string, format string) string {
 		if len(dateSplits) < 3 {
 			return "false"
 		}
+
+		// Validate time format
+		temporatyData := strings.Trim(dateSplits[len(dateSplits)-2], "+:()")
+		timeParts := strings.Split(temporatyData, ":")
+		if len(timeParts) != 2 {
+			return "false"
+		}
+
+		// Check if hours and minutes are valid
+		hours, errHours := strconv.Atoi(timeParts[0])
+		minutes, errMinutes := strconv.Atoi(timeParts[1])
+
+		if errHours != nil || errMinutes != nil || hours < 0 || hours > 23 || minutes < 0 || minutes > 59 {
+			return "false"
+		}
+
 		if !strings.Contains(dateSplits[len(dateSplits)-1], "+") {
 			dateSplits[len(dateSplits)-1] = "-" + dateSplits[len(dateSplits)-1]
 		}
@@ -309,6 +355,33 @@ func FormatDateTime(timestamp string, format string) string {
 	} else {
 		return "false"
 	}
+}
+
+// isValidDate checks if the date is valid
+func isValidDate(year, month, day int) bool {
+	if month < 1 || month > 12 || day < 1 || day > 31 {
+		return false
+	}
+
+	// Check days in month
+	daysInMonth := 31
+	if month == 4 || month == 6 || month == 9 || month == 11 {
+		daysInMonth = 30
+	} else if month == 2 {
+		// February: check for leap year
+		if isLeapYear(year) {
+			daysInMonth = 29
+		} else {
+			daysInMonth = 28
+		}
+	}
+
+	return day <= daysInMonth
+}
+
+// isLeapYear checks if a year is a leap year
+func isLeapYear(year int) bool {
+	return (year%4 == 0 && year%100 != 0) || (year%400 == 0)
 }
 
 // ConvertMonthToAbbrev converts numeric months (01-12) to abbreviated names (Jan-Dec)
