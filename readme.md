@@ -13,7 +13,7 @@ The Flight Itinerary Program processes flight itinerary data by replacing airpor
 ## Usage
 ### Running the Program
 ```
-go run . <input.txt> <output.txt> <airport-lookup.csv>
+go run . ./input.txt ./output.txt ./airport-lookup.csv
 ```
 
 ### Command-Line Arguments
