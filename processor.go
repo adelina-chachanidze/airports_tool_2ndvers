@@ -183,7 +183,7 @@ func FetchAirportName(database []string, code string, codeType int, fields Airpo
 				return splits[fields.name]
 			}
 		} else {
-			fmt.Println("Airport Lookup Malformed. Aborting!")
+			fmt.Println("Airport Lookup Malformed.")
 			break
 		}
 	}
@@ -202,7 +202,7 @@ func FetchCityName(database []string, code string, codeType int, fields AirportF
 				return splits[fields.municipality]
 			}
 		} else {
-			fmt.Println("Airport Lookup Malformed. Aborting!")
+			fmt.Println("Airport Lookup Malformed.")
 			break
 		}
 	}
@@ -330,7 +330,7 @@ func FormatDateTime(timestamp string, format string) string {
 			dateSplits[len(dateSplits)-1] = "-" + dateSplits[len(dateSplits)-1]
 		}
 
-		formattedDate := timeFormatted + timeSuffix + " (" + dateSplits[len(dateSplits)-1]
+		formattedDate := timeFormatted + timeSuffix + " (" + dateSplits[len(dateSplits)-1] + ")"
 		return formattedDate
 
 	} else if format == "T24" {
@@ -364,7 +364,7 @@ func FormatDateTime(timestamp string, format string) string {
 			dateSplits[len(dateSplits)-1] = "-" + dateSplits[len(dateSplits)-1]
 		}
 
-		formattedDate := dateSplits[len(dateSplits)-2] + " (" + dateSplits[len(dateSplits)-1]
+		formattedDate := dateSplits[len(dateSplits)-2] + " (" + dateSplits[len(dateSplits)-1] + ")"
 		return formattedDate
 	} else {
 		return "false"
