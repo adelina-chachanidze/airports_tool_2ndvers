@@ -8,13 +8,15 @@ import (
 	"strings"
 )
 
+// FlightData holds the input, output and database content for flight processing
 type FlightData struct {
 	Input    []string
 	Output   []string
-	Database []string // was lookup
+	Database []string
 }
 
-type AirportFields struct { // was LookupFields
+// AirportFields stores the column indices for different airport data fields
+type AirportFields struct {
 	name         int
 	iso_country  int
 	municipality int
@@ -36,7 +38,6 @@ func main() {
 
 	helperFlag := flag.Bool("h", false, "Display the usage.")
 	flag.Parse()
-	// If a helper flag is used return with instructions
 	if *helperFlag {
 		fmt.Println("itinerary usage: go run . ./input.txt ./output.txt ./airport-lookup.csv")
 		return
@@ -62,7 +63,6 @@ func main() {
 		return
 	}
 
-	// Save the argument and welcome the user
 	inputPath := os.Args[1]
 	outputPath := os.Args[2]
 	lookupPath := os.Args[3]
@@ -78,18 +78,19 @@ func main() {
 		return
 	}
 
-	// Parse data
 	data, _ := ProcessFlightData(&flightData.Input, &flightData.Database, airportFields)
 
 	SaveFileContent(outputPath, data)
 }
 
+// getUserInput reads and returns a line of input from the user
 func getUserInput() string {
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	return strings.TrimSpace(input)
 }
 
+// ValidateLookup checks if the airport database has valid formatting
 func ValidateLookup(lookup []string, fields *AirportFields) bool {
 
 	for i, v := range lookup {
@@ -110,6 +111,7 @@ func ValidateLookup(lookup []string, fields *AirportFields) bool {
 	return true
 }
 
+// SetLookupFields maps database column headers to their respective field indices
 func SetLookupFields(lookup []string, fields *AirportFields) bool {
 
 	for i, v := range lookup {

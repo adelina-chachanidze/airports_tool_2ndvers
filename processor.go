@@ -10,6 +10,8 @@ import (
 // Save the collection into the txt file and convert the values into binary
 func ProcessFlightData(entries *[]string, database *[]string, fields AirportFields) ([]string, []string) {
 
+	// Initialize slices to store processed and displayable lines
+
 	processed := make([]string, 0)
 	displayable := make([]string, 0)
 
@@ -49,6 +51,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 
 			} else if strings.Contains(b, "*#") {
 
+				// Extract the IATA code from the line
 				pattern := regexp.MustCompile(`\*#[A-Z]{3}\b`)
 				match := pattern.FindString(b)
 				value := ""
@@ -176,6 +179,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 	return processed, displayable
 }
 
+// FetchAirportName returns an airport name for a given IATA/ICAO code from the database
 func FetchAirportName(database []string, code string, codeType int, fields AirportFields) string {
 
 	code = strings.Trim(code, "#()*,.")
@@ -194,6 +198,7 @@ func FetchAirportName(database []string, code string, codeType int, fields Airpo
 	return "false"
 }
 
+// FetchCityName returns a city name for a given IATA/ICAO code from the database
 func FetchCityName(database []string, code string, codeType int, fields AirportFields) string {
 
 	code = strings.Trim(code, "#()*,.")
@@ -212,6 +217,7 @@ func FetchCityName(database []string, code string, codeType int, fields AirportF
 	return "false"
 }
 
+// FormatDateTime converts timestamps between different time and date formats
 func FormatDateTime(timestamp string, format string) string {
 
 	timestamp = strings.Replace(timestamp, "Z", "+00:00", -1)
@@ -305,6 +311,7 @@ func FormatDateTime(timestamp string, format string) string {
 	}
 }
 
+// ConvertMonthToAbbrev converts numeric months (01-12) to abbreviated names (Jan-Dec)
 func ConvertMonthToAbbrev(month string) string {
 	switch month {
 	case "01":
