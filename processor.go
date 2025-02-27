@@ -109,7 +109,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 
 			} else if strings.Contains(b, "##") {
 				// Airport search ICAO
-				pattern := regexp.MustCompile(`\##[A-Z]{4}\b`)
+				pattern := regexp.MustCompile(`##[A-Z]{4}\b`)
 				match := pattern.FindString(b)
 				value := ""
 
@@ -130,7 +130,7 @@ func ProcessFlightData(entries *[]string, database *[]string, fields AirportFiel
 
 			} else if strings.Contains(b, "#") {
 				// Airport search IATA
-				pattern := regexp.MustCompile(`\#[A-Z]{3}\b`)
+				pattern := regexp.MustCompile(`#[A-Z]{3}\b`)
 				match := pattern.FindString(b)
 				value := ""
 

@@ -24,6 +24,7 @@ func ShutdownFile(file *os.File) {
 
 // Parse the information from the txt file into a Collection struct.
 func LoadFileContent(file *os.File, content *[]string) {
+
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -61,6 +62,7 @@ func userErrors() error {
 		for i, line := range errorLines {
 			numbers[i] = fmt.Sprintf("%d", line)
 		}
+		fmt.Println("Output file created successfully!\n")
 		fmt.Printf("\033[33mPossible errors were detected on line(s) %s in the output file. Please check if formatting is correct in the input file.\033[0m\n",
 			strings.Join(numbers, ","))
 	}

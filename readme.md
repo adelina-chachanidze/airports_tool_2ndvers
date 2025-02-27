@@ -22,7 +22,7 @@ go run . ./input.txt ./output.txt ./airport-lookup.csv
 - `airport-lookup.csv` - CSV file containing airport and city data.
 
 ### Optional Flags
-- `-h` - Displays usage instructions.
+- `go run . -h` - Displays usage instructions.
 
 ## Input Format
 The input file should contain flight-related text with airport codes and timestamps in the following formats:

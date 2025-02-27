@@ -1,3 +1,4 @@
+Existing Dates:
 29 Feb 2024  
 29 Feb 2020  
 01 Jan 2023  
@@ -6,8 +7,10 @@
 31 Dec 2025  
 31 Dec 2010  
 30 Jun 2018  
-14 Mar 2022  
-01 Apr 2025  
+25 Dec 2025
+01 Jan 2025
+
+Non-Existent Dates:
 D(2023-02-29T12:00Z)  
 D(2021-04-31T08:00Z)  
 D(2019-06-31T14:30Z)  
@@ -20,6 +23,34 @@ D(2025-09-00T15:45Z)
 D(2025-07-32T08:30Z)  
 25 Dec 2025
 01 Jan 2025
+
+Existing Times:
+07:18PM (-02:00)  
+02:54PM (+00:00)  
+03:30AM (+11:00)  
+03:09AM (+00:00)  
+04:08 (+13:00)  
+17:54 (+00:00)  
+15:29 (-11:00)  
+21:43 (+00:00)  
+11:59AM (-05:00)  
+11:59PM (+00:00)  
+12:00AM (+10:00)  
+12:00PM (+00:00)  
+01AM (+00:00)  
+05:9PM (+05:30)  
+00:00 (+00:00)  
+23:59 (-04:00)  
+12:00 (+07:00)  
+06:06 (+00:00)  
+
+Non-Existent Times
+T12(2024-11-04T13:72Z)  
+T12(2027-07-14T24:01+01:00)  
+T12(2035-06-25T12:60-03:00)  
+T24(2040-02-29T25:00Z)
+T24(2055-12-31T99:99+05:30)  
+T24(2099-04-20T13:99-07:00)
 
 correct, correct, doesnt exist, malformed
 IATA airports: Modlin Airport,            Hawarden Airport, #HKI, Siglufj����r����ur Airport
@@ -36,33 +67,6 @@ INCORRECT AIRPORTS: Your flight form ##ELU to #FARS is going to be delayed by 1 
 
 CORRECT CITIES: There're 3628km between Aspen-Pitkin Co/Sardy Field and Maun Airport 
 INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN 
-
-09 May 2022
-09 May 2022
-
-01 Jan 2025
-01 Jan 2007
-
-2. 07:18PM (-02:00)
-3. 02:54PM (+00:00)
-4. 03:30AM (+11:00)
-5. 03:09AM (+00:00)
-6. 04:08 (+13:00)
-7. 17:54 (+00:00)
-8. 15:29 (-11:00)
-9. 21:43 (+00:00)
-
-Run the program, and the output file should be:
-
-09 May 2022
-07:18PM (-02:00)
-02:54PM (+00:00)
-03:30AM (+11:00)
-03:09AM (+00:00)
-04:08 (+13:00)
-17:54 (+00:00)
-15:29 (-11:00)
-21:43 (+00:00)
 
 Flight Itinerary
 Line 1Line 2
@@ -91,14 +95,3 @@ Arrival: 12:00 (+00:00)
 (Wewak) to #BIHN... on 15 Jul 2023
 (*#BIEG) to #BIHN... on 15 Jul 2023
 (Egilssta����ir) to #BIHN... on 15 Jul 2023
-
-##OOOO to #AAA on 15 Aug 2023
-D(2022-99-99T08:07Z)
-07:18PM (-02:00)
-02:54PM (+00:00)
-03:30AM (+11:00)
-03:09AM (+00:00)
-04:08 (+13:30)
-17:54 (+00:00)
-15:29 (-11:00)
-21:43 (+00:00)
