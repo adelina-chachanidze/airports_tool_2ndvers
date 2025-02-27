@@ -32,11 +32,9 @@ func LoadFileContent(file *os.File, content *[]string) {
 		line = r.Replace(line)
 		// Split by newlines
 		splits := strings.Split(line, "\n")
-		// Process each split to remove extra spaces
+		// Add each split directly without normalizing whitespace
 		for _, split := range splits {
-			// Fields splits by whitespace and Join reconstructs with single spaces
-			normalized := strings.Join(strings.Fields(split), " ")
-			*content = append(*content, normalized)
+			*content = append(*content, split)
 		}
 	}
 }
@@ -89,8 +87,6 @@ func SaveFileContent(path string, content []string) error {
 	if err := userErrors(); err != nil {
 		return err
 	}
-
-	fmt.Println("Output files created successfully!")
 	return nil
 }
 

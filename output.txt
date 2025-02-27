@@ -1,39 +1,41 @@
-29 Feb 2024
-29 Feb 2020
-01 Jan 2023
-31 Dec 1999
-01 Jan 2000
-31 Dec 2025
-31 Dec 2010
-30 Jun 2018
-14 Mar 2022
-01 Apr 2025
-D(2023-02-29T12:00Z)
-D(2021-04-31T08:00Z)
-D(2019-06-31T14:30Z)
-D(2022-11-31T23:59Z)
-D(2024-02-30T00:00Z)
-D(2020-02-30T10:00-04:00)
-D(2023-13-01T00:00Z)
-D(2023-00-10T12:00Z)
-D(2025-09-00T15:45Z)
-D(2025-07-32T08:30Z)
+29 Feb 2024  
+29 Feb 2020  
+01 Jan 2023  
+31 Dec 1999  
+01 Jan 2000  
+31 Dec 2025  
+31 Dec 2010  
+30 Jun 2018  
+14 Mar 2022  
+01 Apr 2025  
+D(2023-02-29T12:00Z)  
+D(2021-04-31T08:00Z)  
+D(2019-06-31T14:30Z)  
+D(2022-11-31T23:59Z)  
+D(2024-02-30T00:00Z)  
+D(2020-02-30T10:00-04:00)  
+D(2023-13-01T00:00Z)  
+D(2023-00-10T12:00Z)  
+D(2025-09-00T15:45Z)  
+D(2025-07-32T08:30Z)  
+25 Dec 2025
+01 Jan 2025
 
 correct, correct, doesnt exist, malformed
-IATA airports: Modlin Airport, Hawarden Airport, #HKI, Siglufj����r����ur Airport
+IATA airports: Modlin Airport,            Hawarden Airport, #HKI, Siglufj����r����ur Airport
 ICAO airports: Mendi Airport, Zabrat Airport, ##HKII, Hornafj����r����ur Airport
 
-correct, correct, doesnt exist, malformed
+            correct, correct, doesnt exist, malformed
 IATA cities: Modlin Airport, Hawarden Airport, #HKI, Siglufj����r����ur Airport
 ICAO cities: Mendi Airport,##UBTT, ##HKII,##BIHN
 
-INCORRECT: ##WMI, #UBTT, ##AYM, #UBTT, ##CEG, AYMN, ###WMI
+INCORRECT: ##WMI, #UBTT, ##AYM,          #UBTT, ##CEG, AYMN, ###WMI
 
 CORRECT AIRPORTS: Your flight form Guemar Airport to Robertson Airport is going to be delayed by 1 hour
 INCORRECT AIRPORTS: Your flight form ##ELU to #FARS is going to be delayed by 1 hour
 
-CORRECT CITIES: There're 3628km between Aspen-Pitkin Co/Sardy Field and Maun Airport
-INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN
+CORRECT CITIES: There're 3628km between Aspen-Pitkin Co/Sardy Field and Maun Airport 
+INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN 
 
 09 May 2022
 09 May 2022
@@ -71,7 +73,7 @@ Los Angeles International Airport to London on 15 Jul 2023
 Departure: 09:00AM (-07:00)
 Arrival: 12:00 (+00:00)
 Departure: 09:00AM (-07:00)
-Dep2: T12(2007-04-05T12:30−02:00)
+Dep2:        T12(2007-04-05T12:30−02:00)
 Hel#KUOlo
 
 #HKI Flight
@@ -80,7 +82,7 @@ Your flight departs from Hannover Airport and your destination is Bremen Airport
 Your flight departs from ##HAJ, and your destination is #EDDW.
 
 Your flight departs from Hannover Airport, and your destination is Bremen Airport.
-(Southampton Airport) to Hawarden Airport. on 15 Jul 2023
+(Southampton Airport) to          Hawarden Airport. on 15 Jul 2023
 
 Departure: 09:00AM (-07:00)
 Arrival: 12:00 (+00:00)
