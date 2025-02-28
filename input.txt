@@ -67,7 +67,7 @@ INCORRECT: ##WMI, #UBTT, ##AYM,          #UBTT, ##CEG, AYMN, ###WMI
 CORRECT AIRPORTS: Your flight form #ELU to ##FARS is going to be delayed by 1 hour
 INCORRECT AIRPORTS: Your flight form ##ELU to #FARS is going to be delayed by 1 hour
 
-CORRECT CITIES: There're 3628km between #ASE and ##FBMN 
+CORRECT CITIES: There're 3628km between *#ASE and ##FBMN 
 INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN 
 
 Flight Itinerary

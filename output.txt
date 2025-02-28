@@ -65,7 +65,7 @@ INCORRECT: ##WMI, #UBTT, ##AYM,          #UBTT, ##CEG, AYMN, ###WMI
 CORRECT AIRPORTS: Your flight form Guemar Airport to Robertson Airport is going to be delayed by 1 hour
 INCORRECT AIRPORTS: Your flight form ##ELU to #FARS is going to be delayed by 1 hour
 
-CORRECT CITIES: There're 3628km between Aspen-Pitkin Co/Sardy Field and Maun Airport 
+CORRECT CITIES: There're 3628km between Aspen and Maun Airport 
 INCORRECT CITIES: There're 3628km between ##ASE and *#FBMN 
 
 Flight Itinerary
